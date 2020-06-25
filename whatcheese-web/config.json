@@ -1,0 +1,70 @@
+{ 
+  "applications": {
+    "whatphp": {
+      "type": "php",
+      "processes": 2,
+      "root": "/var/www/html/",
+      "user": "www-data",
+      "group": "www-data",
+      "options": {
+        "file": "/var/www/html/php.ini",
+        "admin": {
+            "memory_limit": "256M",
+            "variables_order": "EGPCS",
+            "expose_php": "1"
+        },
+        "user": {
+            "display_errors": "1"
+        }
+      }
+    },
+  },
+  "listeners": {
+    "*:80": {
+      "pass": "routes"
+    }
+  },
+  "routes": [
+    {
+      "match": {
+        "uri": [ "*.php", "/admin/" ]
+      },
+      "action": {
+       "pass": "applications/whatphp"
+      }
+    },
+    {
+      "action": {
+        "share": "/var/www/html"
+      }
+    }
+  ],
+  "access_log": "/var/log/unit_access.log",
+  "settings": {
+    "http": {
+      "static": {
+        "mime_types": {
+          "application/javascript": [ 
+            ".js"
+          ],
+          "text/html": [
+            ".html"
+          ],
+          "text/css": [
+            ".css"
+          ],
+          "image/png": [
+            ".png"
+          ],
+          "image/jpeg": [
+            ".jpg"
+          ],
+          "image/x-icon": [
+            ".ico"
+          ]
+        }
+      }
+    }
+  }
+}
+

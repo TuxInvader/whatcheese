@@ -1,0 +1,37 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="../style.css" type="text/css" media="all"/>
+</head>
+<body>
+<div class="header">
+<img src="../what-cheese-logo.png" class="logo"/>
+<p class="title">What Cheese On-Line</p>
+</div>
+<div class="body">
+  <!--# set var="esi" value="on" -->
+  <!--# set var="tease" value="true" -->
+  <script src="/utils.js"></script>
+  <div id="sidenav">
+  </div>
+  <div class="content">
+    <h1 style="margin-left:30px;">The Cheese News</h1>
+    <div class="item" id="cc"> <!--# include file="/data/cc.html" --> </div>
+    <div class="item" id="comp"> <!--# include file="/data/comp.html" --> </div>
+    <div class="item" id="sotgo"> <!--# include file="/data/sotgo.html" --> </div>
+  </div>
+  <div class="footer">
+    Copyright 2019 - The master cheese makers guild - All rights reserved
+  </div>
+  <script>write_menu();</script>
+  <!--# if expr="$esi != on" -->
+  <script>
+    write_article("cc", "/data/cc.html", true);
+    write_article("comp", "/data/comp.html", true);
+    write_article("sotgo", "/data/sotgo.html", true);
+  </script>
+  <!--# endif -->
+</div>
+</body>
+</html>

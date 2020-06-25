@@ -1,0 +1,83 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet" href="style.css" type="text/css" media="all"/>
+</head>
+<body>
+<div class="header">
+<img src="what-cheese-logo.png" class="logo"/>
+<p class="title">What Cheese On-Line</p>
+</div>
+<div class="body" >
+  <!--# set var="esi" value="on" -->
+  <!--# set var="tease" value="true" -->
+  <script src="/utils.js"></script>
+  <div id="sidenav">
+  </div>
+  <div class="content">
+    <h1 style="margin-left:30px;">Welcome Home</h1>
+    <div class="topitem">
+      <div class="topitem-flex">
+        <div class="item">
+          <img src="/media/cheese-con.png" class="itemimg"/>
+          <div id="cotm">Cheese of the Moment</div>
+          <div id="botm">Beer of the Moment</div>
+          <div><p>Submission Result:
+          <pre id="addResult">N/A</pre>
+          </p>
+          </div>
+        </div>
+      </div>
+      <div id="app" class="app" >
+        <form name=addItem method="POST">
+          <fieldset>
+            <legend>Submit Product</legend>
+            <label for="Type">Type: </label>
+            <select id="type" name="type">
+              <option value="cheese" selected>Cheese</option>
+              <option value="beer">Beer</option>
+              <option value="pickle">Pickle</option>
+              <option value="wine">Wine</option>
+            </select>
+            <br/>
+            <label for="name">Name: </label>
+            <input type="text" id="name" name="name" value="Edam">
+            <br/>
+            <label for="country">Country: </label>
+            <input type="text" id="country" name="country" value="Netherlands">
+            <br/>
+            <label for="Description">description: </label>
+            <br/>
+            <textarea id="description" name="description" rows="5" cols="50">Edam (Dutch: Edammer, [ˈeːdɑmər]) is a semi-hard cheese that originated in the Netherlands, and is named after the town of Edam in the province of North Holland</textarea>
+            <br/>
+            <label for="name">API Key: </label><input type="text" id="psk" name="psk">
+            <br/>
+            <input type="submit" value="Post Cheese">
+          </fieldset>
+        </form>
+        <script>
+          get_api_item("cheese", "", "", "cotm")
+          get_api_item("beer", "", "", "botm")
+          post_api_item("addItem", "addResult");
+        </script>
+      </div>
+    </div>
+    <div class="item" id="nrfc"> <!--# include file="/data/nrfc.html" -->  </div>
+    <div class="item" id="cc"> <!--# include file="/data/cc.html" --> </div>
+    <div class="item" id="sotgo"> <!--# include file="/data/sotgo.html" --> </div>
+  </div>
+  <div class="footer">
+    Copyright 2020 - The master cheese makers guild - All rights reserved
+  </div>
+  <script> write_menu(); </script>
+  <!--# if expr="$esi != on" -->
+  <script>
+    write_article("nrfc", "/data/nrfc.html", true);
+    write_article("cc", "/data/cc.html", true);
+    write_article("sotgo", "/data/sotgo.html", true);
+  </script>
+  <!-- endif -->
+</div>
+</body>
+</html>

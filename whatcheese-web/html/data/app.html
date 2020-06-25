@@ -1,0 +1,57 @@
+      <img src="/media/nginx-icon.svg"/ class="itemimg">
+      <h2>Cheese Database</h2>
+      <p>
+      </p>
+      <!--# if expr="$tease = true" -->
+      <!--teaser-->
+      <script>
+        $(document).ready(function() {
+        $('form').submit(function(e) {
+          e.preventDefault();
+          var form = $(this);
+          var url = form.attr('action') + form.attr('name') + '?psk=' + form.attr('psk');
+          $.ajax({
+           type: "POST",
+           url: url,
+           data: form.serialize(), // serializes the form's elements.
+           always: function(data)
+           {
+               alert(data); // show response from the php script.
+           }
+         });
+        });
+        });
+      </script>
+      <p>
+        <form id=addCheese action="https://api.whatcheese.nginx.demo/v1/add/cheese/" method="POST">
+          <fieldset>
+            <legend>Submit a Cheese</legend>
+            <label for="name">Name: </label>
+            <input type="text" id="name" name="name">
+            <br/>
+            <label for="Description">description: </label>
+            <br/>
+            <textarea id="description" name="description" rows="5" cols="50"></textarea>
+            <br/>
+            <label for="name">API Key: </label><input type="text" id="psk" name="psk">
+            <br/>
+            <input type="submit" value="Post Cheese">
+          </fieldset>
+        </form>
+      </p>
+     <!--teaser-->
+      <!--# else -->
+      <img src="/media/brie.png" style="float: right;"/>
+      <br/><br/><br/>
+      <p>
+        Industry experts are quoted as saying that this cheese is just a rebranding of a Somerset cheese which was briefly sold in Tesco and Marks &amp; Sparks last year. The cheese was removed from the shelves following a health scare. 
+      </p>
+      <br/>
+      <p>
+        Self proclaimed Cheese expert Sir George Cheddar of Wookey Hole commented "This is just another weird publicity stunt, after that disasterous N-Gin-X-Tonic debacle last year", and added "NGINX should stick to making world class Load Balancers, Polyglot Application Servers, and simplifying Service Mesh and Kubernetes! Leave the food and beverage making to people more qualified!".
+      </p>
+      <br/>
+      <p>
+      <i>Editor: I for one enjoyed the N-Gin-X-Tonic "debacle", I hope they make some more of that stuff!</i>
+      </p>
+      <!--# endif -->
