@@ -6,7 +6,7 @@ function str_begins($haystack, $needle) {
 
 function returnJSON($path, $data) {
   header('Content-type: application/json; charset=utf-8');
-  header('Access-Control-Allow-Origin: *');
+  #header('Access-Control-Allow-Origin: *');
   $data['result'] = "OK";
   $data['request'] = $path;
   echo json_encode($data);
@@ -14,7 +14,7 @@ function returnJSON($path, $data) {
 
 function returnError($error) {
   header('Content-type: application/json; charset=utf-8');
-  header('Access-Control-Allow-Origin: *');
+  #header('Access-Control-Allow-Origin: *');
   $path = strtolower(urldecode($urlComponents['path']));
   $data = [];
   $data['result'] = "ERROR";

@@ -36,7 +36,9 @@ function process_item(type, data, outputElement) {
 function get_api_item(type, name, search, outputElement)
 {
   var xmlhttp;
-  var api_uri = "https://api.whatcheese.nginx.demo/v1/" + type
+  var web = location.hostname.split('.')
+  web[0] = 'api'
+  var api_uri = "https://" + web.join('.') + "/v1/" + type
   if ( name != "" ) 
   {
     api_uri += "/" + name
@@ -60,13 +62,14 @@ function get_api_item(type, name, search, outputElement)
       var data = JSON.parse(xmlhttp.response);
       process_item(type, data, outputElement);
     } else {
-      var data = { "result": "ERROR", "details": xmlhttp.status }
+      var data = { "result": "ERROR", "details": xmlhttp.status + ": " + xmlhttp.statusText }
+      console.log(xmlhttp);
       process_item(type, data, outputElement);
     }
   }
   xmlhttp.onerror=function()
   {
-    var data = { "result": "ERROR", "details": xmlhttp.status }
+    var data = { "result": "ERROR", "details": xmlhttp.status + ": " + xmlhttp.statusText }
     process_item(type, data, outputElement);
   }
  
@@ -80,9 +83,11 @@ function post_api_item(formID, resultID)
   form.addEventListener('submit', function(ev) {
     ev.preventDefault();
     var formdata = new FormData(form)
-    var api_post = "https://api.whatcheese.nginx.demo/v1/add/" + formdata.get("type") + "?psk=" + formdata.get("psk")
+    var web = location.hostname.split('.')
+    web[0] = 'api'
+    var api_post = "https://" + web.join('.') + "/v1/add/" + formdata.get("type") + "?psk=" + formdata.get("psk")
     var output = document.getElementById(resultID)
-    
+
     var object = {};
     formdata.forEach(function(value, key){
       object[key] = value;
