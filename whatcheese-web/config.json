@@ -4,8 +4,7 @@
       "type": "php",
       "processes": 2,
       "root": "/var/www/html/",
-      "user": "www-data",
-      "group": "www-data",
+      "user": "unit",
       "options": {
         "file": "/var/www/html/php.ini",
         "admin": {
@@ -39,7 +38,7 @@
       }
     }
   ],
-  "access_log": "/var/log/unit_access.log",
+  "access_log": "/var/log/unit/access.log",
   "settings": {
     "http": {
       "static": {
