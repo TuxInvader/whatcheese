@@ -19,7 +19,7 @@ spec:
       serviceAccount: cheese-web-sa
       containers:
       - name: whatcheese-web
-        image: tuxinvader/whatcheese-web:v1.24-ocp
+        image: tuxinvader/whatcheese-web:ocp
         imagePullPolicy: Always
         ports:
 #        - containerPort: 443
