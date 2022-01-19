@@ -1,0 +1,33 @@
+---
+apiVersion: specs.smi-spec.io/v1alpha3
+kind: HTTPRouteGroup
+metadata:
+  name: web-route-group
+  namespace: whatcheese
+spec:
+  matches:
+  - name: web-traffic
+    methods:
+    - GET
+    pathRegex: "/.*"
+    #headers:
+    #- X-Demo: "demo"
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: cheese-web-target
+spec:
+  destination:
+    kind: ServiceAccount
+    name: cheese-web-sa
+    namespace: whatcheese
+  rules:
+  - kind: HTTPRouteGroup
+    name: web-route-group
+    matches:
+    - web-traffic
+  sources:
+  - kind: ServiceAccount
+    name: nginx-ingress
+    namespace: nginx-ingress

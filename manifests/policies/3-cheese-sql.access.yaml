@@ -1,0 +1,27 @@
+---
+apiVersion: specs.smi-spec.io/v1alpha3
+kind: TCPRoute
+metadata:
+  name: sql-route
+  namespace: whatcheese
+#spec:
+#  matches:
+#    ports:
+#    - 3306
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: cheese-sql-target
+spec:
+  destination:
+    kind: ServiceAccount
+    name: cheese-db-sa
+    namespace: whatcheese
+  rules:
+  - kind: TCPRoute
+    name: sql-route
+  sources:
+  - kind: ServiceAccount
+    name: cheese-api-sa
+    namespace: whatcheese
