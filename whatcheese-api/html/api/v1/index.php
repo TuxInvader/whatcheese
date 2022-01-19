@@ -66,6 +66,10 @@ $fields = [];
 $urlComponents = parse_url($_SERVER['REQUEST_URI']);
 $path = strtolower(urldecode($urlComponents['path']));
 $host = $_SERVER['HTTP_HOST'];
+$protocol = "https";
+if(isset($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+  $protocol = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+}
 if(isset($urlComponents['query'])) {
   parse_str($urlComponents['query'], $fields);
 }
@@ -91,7 +95,7 @@ if ( in_array($segments[2], array("cheese","pickle","beer","wine") ) ) {
     $data['items'] = intval($row[0]);
     while($row = $mysql_result->fetch_array()) {
       array_push(  $results, [ "id" => intval($row[0]), "name" => $row[1], 
-                               "href" => "https://$host/v1/$segments[2]/$row[1]",
+                               "href" => "$protocol://$host/v1/$segments[2]/$row[1]",
                                "country" => $row[2], "description" => $row[3] ]);
     }
   } else {  
@@ -128,10 +132,10 @@ if ( in_array($segments[2], array("cheese","pickle","beer","wine") ) ) {
   $data['items'] = 0;
   $data['results'] = [];
   $data['links'] = [ 
-    'cheese' => [ 'href' => "https://$host/v1/cheese" ],
-    'pickle' => [ 'href' => "https://$host/v1/pickle" ],
-    'beer'   => [ 'href' => "https://$host/v1/beer" ],
-    'wine'   => [ 'href' => "https://$host/v1/wine" ] ];
+    'cheese' => [ 'href' => "$protocol://$host/v1/cheese" ],
+    'pickle' => [ 'href' => "$protocol://$host/v1/pickle" ],
+    'beer'   => [ 'href' => "$protocol://$host/v1/beer" ],
+    'wine'   => [ 'href' => "$protocol://$host/v1/wine" ] ];
 } else {
   $data['items'] = 0;
   $data['results'] = [];
