@@ -25,6 +25,10 @@ spec:
           - name: "X-Your-IP"
             value: "${remote_addr}"
             always: true
+        requestHeaders:
+          add:
+          - name: "X-Forwarded-Proto"
+            value: "${scheme}"
   - path: /v1/add
     matches:
     - conditions:
@@ -38,6 +42,10 @@ spec:
             - name: "Access-Control-Allow-Origin"
               value: "*"
               always: true
+          requestHeaders:
+            add:
+            - name: "X-Forwarded-Proto"
+              value: "${scheme}"
     action:
       return:
         code: 200
