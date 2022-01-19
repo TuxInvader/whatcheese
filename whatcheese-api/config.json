@@ -1,24 +1,10 @@
-#!/bin/bash
-
-chown -R mysql:mysql /var/lib/mysql /var/run/mysqld
-
-echo '[+] Starting mysql...'
-service mysql start
-
-echo '[+] Starting NGINX Unit'
-service unit start
-
-sleep 5
-
-cat <<-EOF > /tmp/unit-php.json
-{ 
+{
   "applications": {
     "whatapi": {
       "type": "php",
       "processes": 2,
       "root": "/var/www/html/",
-      "user": "www-data",
-      "group": "www-data",
+      "user": "unit",
       "script": "api/v1/index.php",
       "options": {
         "file": "/var/www/html/php.ini",
@@ -48,12 +34,12 @@ cat <<-EOF > /tmp/unit-php.json
       }
     }
   ],
-  "access_log": "/var/log/unit_access.log",
+  "access_log": "/var/log/unit/access.log",
   "settings": {
     "http": {
       "static": {
         "mime_types": {
-          "application/javascript": [ 
+          "application/javascript": [
             ".js"
           ],
           "text/html": [
@@ -76,13 +62,3 @@ cat <<-EOF > /tmp/unit-php.json
     }
   }
 }
-EOF
-
-curl -X PUT --data-binary @/tmp/unit-php.json --unix-socket \
-       /var/run/control.unit.sock http://localhost/config/
-
-while true
-do
-    tail -f /var/log/unit_access.log
-    exit 0
-done

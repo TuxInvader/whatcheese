@@ -1,0 +1,45 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: www-whatcheese-web-ingress
+  namespace: whatcheese
+spec:
+  tls:
+  - hosts:
+      - www.whatcheese.apps-crc.testing
+    secretName: whatcheese-cert
+  rules:
+  - host: "www.whatcheese.apps-crc.testing"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: whatcheese-web-v2
+            port:
+              number: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-whatcheese-web-ingress
+  namespace: whatcheese
+spec:
+  tls:
+  - hosts:
+      - api.whatcheese.apps-crc.testing
+    secretName: whatcheese-cert
+  rules:
+  - host: "api.whatcheese.apps-crc.testing"
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: whatcheese-api
+            port:
+              number: 80
+

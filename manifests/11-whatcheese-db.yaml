@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: whatcheese-db
+  namespace: whatcheese
+  labels:
+    app: whatcheese-db
+spec:
+  selector:
+    matchLabels:
+      app: whatcheese-db
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: whatcheese-db
+    spec:
+      serviceAccount: cheese-db-sa
+      containers:
+      - name: whatcheese-db
+        image: tuxinvader/whatcheese-db:ocp
+        #imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3306
+        securityContext:
+          allowPrivilegeEscalation: true
+          runAsUser: 101 #mysql
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: whatcheese-db
+  namespace: whatcheese
+spec:
+  selector:
+    app: whatcheese-db
+  type: ClusterIP
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: 3306
+      protocol: TCP

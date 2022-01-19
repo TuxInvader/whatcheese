@@ -55,25 +55,32 @@ function addRow($connection, $table, $name, $country, $description) {
 $user="whatcheese";
 $password="moreCheeseLad";
 $database="whatcheese";
-$connection = new mysqli("whatcheese-db", $user, $password, $database);
+$connection = new mysqli("whatcheese-db", $user, $password, $database, '3306');
 if (!$connection) {
     returnError('Could not connect: ' . $connection->connect_error );
 }
 mysqli_set_charset($connection, "utf8");
 
 $data = [];
+$fields = [];
 $urlComponents = parse_url($_SERVER['REQUEST_URI']);
 $path = strtolower(urldecode($urlComponents['path']));
 $host = $_SERVER['HTTP_HOST'];
-parse_str($urlComponents['query'], $fields);
+if(isset($urlComponents['query'])) {
+  parse_str($urlComponents['query'], $fields);
+}
 $segments = explode("/", $path);
 $unit = gethostname();
 
 $data['section'] = $segments[2];
 if ( in_array($segments[2], array("cheese","pickle","beer","wine") ) ) {  
   $results = [];
-  if ( count($segments) == 3 ) { 
-    $mysql_result = getRows($connection, $segments[2], $fields['search']);
+  if ( count($segments) == 3 ) {
+    $searchReq = '';
+    if(isset($fields['search'])) {
+      $searchReq = $fields['search'];
+    }
+    $mysql_result = getRows($connection, $segments[2], $searchReq);
   } else {
     $mysql_result = getRow($connection, $segments[2], $segments[3]);
   }
