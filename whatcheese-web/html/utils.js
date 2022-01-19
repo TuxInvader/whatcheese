@@ -7,7 +7,7 @@ function write_menu() {
   menu += '<a href="/offers/">Offers</a>' 
   menu += '<a href="/diagnose.php">Diagnose</a>' 
   menu += '<a href="/admin/">Admin</a>' 
-  menu += '<a href="https://' + api + '/v1/links">API</a>'
+  menu += '<a href="' + location.protocol + '//' + api + '/v1/links">API</a>'
   document.getElementById("sidenav").innerHTML = menu;
 }
 
@@ -38,7 +38,7 @@ function get_api_item(type, name, search, outputElement)
   var xmlhttp;
   var web = location.hostname.split('.')
   web[0] = 'api'
-  var api_uri = "https://" + web.join('.') + "/v1/" + type
+  var api_uri = location.protocol + "//" + web.join('.') + "/v1/" + type
   if ( name != "" ) 
   {
     api_uri += "/" + name
@@ -85,7 +85,7 @@ function post_api_item(formID, resultID)
     var formdata = new FormData(form)
     var web = location.hostname.split('.')
     web[0] = 'api'
-    var api_post = "https://" + web.join('.') + "/v1/add/" + formdata.get("type") + "?psk=" + formdata.get("psk")
+    var api_post = location.protocol + "//" + web.join('.') + "/v1/add/" + formdata.get("type") + "?psk=" + formdata.get("psk")
     var output = document.getElementById(resultID)
 
     var object = {};

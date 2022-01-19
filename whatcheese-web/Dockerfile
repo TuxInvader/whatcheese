@@ -1,7 +1,8 @@
 FROM nginx/unit:1.24.0-php8.0
 RUN apt-get update && \
     apt-get upgrade -y && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y libcap2-bin && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y \
+      libcap2-bin procps iproute2 netcat-openbsd && \
     mkdir -p /var/run/unit /var/lib/unit /var/log/unit && \
     chown -R unit:0 /var/run /var/lib/unit /var/www /var/log/unit && \
     chmod -R g=u /var/run /var/lib/unit /var/www /var/log/unit && \
