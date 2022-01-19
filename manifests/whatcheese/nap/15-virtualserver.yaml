@@ -5,11 +5,15 @@ metadata:
   name: api-whatcheese-web-vs
   namespace: whatcheese
 spec:
+  host: api.cheese.apps-crc.testing
   tls:
     secret: whatcheese-cert
-  host: "api.whatcheese.nginx.demo"
-  #policies:
-  #  - name: cheese-waf
+  policies:
+    - name: cheese-waf
+  upstreams:
+  - name: apiv1
+    service: whatcheese-api
+    port: 80
   routes:
   - path: /
     route: api-whatcheese-routes
@@ -20,9 +24,11 @@ metadata:
   name: www-whatcheese-web-vs
   namespace: whatcheese
 spec:
-  host: "www.whatcheese.nginx.demo"
+  host: www.cheese.apps-crc.testing
   tls:
     secret: whatcheese-cert
+  policies:
+    - name: cheese-waf
   upstreams:
   - name: webv1
     service: whatcheese-web
@@ -30,8 +36,6 @@ spec:
   - name: webv2
     service: whatcheese-web-v2
     port: 80
-  #policies:
-  #  - name: cheese-waf
   routes:
   - path: /
     matches:

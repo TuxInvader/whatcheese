@@ -5,7 +5,7 @@ metadata:
   name: api-whatcheese-routes
   namespace: whatcheese
 spec:
-  host: "api.whatcheese.nginx.demo"
+  host: "api.cheese.apps-crc.testing"
   upstreams:
   - name: apiv1
     service: whatcheese-api
@@ -13,14 +13,37 @@ spec:
   subroutes:
   - path: /
     action:
-      pass:  apiv1
+      proxy:
+        upstream: apiv1
+        responseHeaders:
+          add:
+          - name: "Access-Control-Allow-Origin"
+            value: "*"
+            always: true
+          - name: "X-Your-IP"
+            value: "${remote_addr}"
+            always: true
+        requestHeaders:
+          add:
+          - name: "X-Forwarded-Proto"
+            value: "${scheme}"
   - path: /v1/add
     matches:
     - conditions:
       - argument: psk
         value: superSecretKey
       action:
-        pass: apiv1
+        proxy:
+          upstream: apiv1
+          responseHeaders:
+            add:
+            - name: "Access-Control-Allow-Origin"
+              value: "*"
+              always: true
+          requestHeaders:
+            add:
+            - name: "X-Forwarded-Proto"
+              value: "${scheme}"
     action:
       return:
         code: 200

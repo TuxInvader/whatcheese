@@ -22,3 +22,6 @@ spec:
       usSocialSecurityNumbers: true
       enforcementMode: ignore-urls-in-list
       enforcementUrls: []
+    bot-defense:
+      settings:
+        isEnabled: false

@@ -1,0 +1,13 @@
+apiVersion: k8s.nginx.org/v1
+kind: Policy
+metadata:
+  name: cheese-waf
+  namespace: whatcheese
+spec:
+  waf:
+    apPolicy: dataguard-blocking
+    enable: true
+    securityLog:
+      enable: true
+      apLogConf: "logconf"
+      logDest: "stderr"
